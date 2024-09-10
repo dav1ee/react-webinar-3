@@ -7,6 +7,7 @@ class Store {
       ...initState,
       selectedItem: null,
     };
+    this.maxCode = this.getMaxCode();
     this.listeners = []; // Слушатели изменений состояния
   }
 
@@ -47,7 +48,7 @@ class Store {
   addItem() {
     this.setState({
       ...this.state,
-      list: [...this.state.list, { code: this.state.list.length + 1, title: 'Новая запись' }],
+      list: [...this.state.list, { code: ++this.maxCode, title: 'Новая запись' }],
     });
   }
 
@@ -71,6 +72,14 @@ class Store {
       ...this.state,
       selectedItem: this.state.selectedItem !== code ? code : null,
     });
+  }
+
+  /**
+   * Получение максимального значения кода
+   * @returns {Number}
+   */
+  getMaxCode() {
+    return Math.max(0, ...this.state.list.map(item => item.code));
   }
 }
 
