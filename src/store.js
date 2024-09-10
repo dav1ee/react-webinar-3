@@ -70,6 +70,16 @@ class Store {
   selectItem(code) {
     this.setState({
       ...this.state,
+      list: this.state.list.map(item => {
+        if (item.code === code && this.state.selectedItem !== code) {
+          if (item.selectionCounter) {
+            item.selectionCounter++;
+          } else {
+            item.selectionCounter = 1;
+          }
+        }
+        return item;
+      }),
       selectedItem: this.state.selectedItem !== code ? code : null,
     });
   }
