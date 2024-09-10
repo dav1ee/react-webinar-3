@@ -3,7 +3,10 @@
  */
 class Store {
   constructor(initState = {}) {
-    this.state = initState;
+    this.state = {
+      ...initState,
+      selectedItem: null,
+    };
     this.listeners = []; // Слушатели изменений состояния
   }
 
@@ -66,12 +69,7 @@ class Store {
   selectItem(code) {
     this.setState({
       ...this.state,
-      list: this.state.list.map(item => {
-        if (item.code === code) {
-          item.selected = !item.selected;
-        }
-        return item;
-      }),
+      selectedItem: this.state.selectedItem !== code ? code : null,
     });
   }
 }

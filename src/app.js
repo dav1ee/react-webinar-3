@@ -9,6 +9,7 @@ import './styles.css';
  */
 function App({ store }) {
   const list = store.getState().list;
+  const selectedItem = store.getState().selectedItem;
 
   return (
     <div className="App">
@@ -23,7 +24,7 @@ function App({ store }) {
           {list.map(item => (
             <div key={item.code} className="List-item">
               <div
-                className={'Item' + (item.selected ? ' Item_selected' : '')}
+                className={'Item' + (selectedItem === item.code ? ' Item_selected' : '')}
                 onClick={() => store.selectItem(item.code)}
               >
                 <div className="Item-code">{item.code}</div>
