@@ -89,7 +89,7 @@ class Store {
    * @returns {Number}
    */
   getMaxCode() {
-    return Math.max(0, ...this.state.list.map(item => item.code));
+    return this.state.list.reduce((max, { code }) => (code > max ? code : max), 0);
   }
 }
 
