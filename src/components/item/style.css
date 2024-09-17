@@ -1,12 +1,6 @@
 .Item {
   display: flex;
   justify-content: flex-start;
-  transition: background-color 1s;
-}
-
-.Item_selected {
-  background: #75aaf1;
-  color: #fff;
 }
 
 .Item-code {
@@ -21,5 +15,7 @@
 .Item-actions {
   display: flex;
   justify-content: flex-end;
+  gap: 24px;
+  min-width: fit-content;
   padding: 20px 20px 20px 10px;
 }
