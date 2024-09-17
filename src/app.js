@@ -4,6 +4,7 @@ import List from './components/list';
 import Controls from './components/controls';
 import Head from './components/head';
 import PageLayout from './components/page-layout';
+import Modal from './components/modal';
 
 /**
  * Приложение
@@ -13,6 +14,7 @@ import PageLayout from './components/page-layout';
 function App({ store }) {
   const list = store.getState().list;
   const cart = store.getState().cart;
+  const modal = store.getState().modal;
 
   const callbacks = {
     onAddItemToCart: useCallback(
@@ -21,13 +23,35 @@ function App({ store }) {
       },
       [store],
     ),
+    onRemoveItemFromCart: useCallback(
+      code => {
+        store.removeItemFromCart(code);
+      },
+      [store],
+    ),
+    onOpenModal: useCallback(() => {
+      store.openModal();
+    }, [store]),
+    onCloseModal: useCallback(() => {
+      store.closeModal();
+    }, [store]),
   };
 
   return (
     <PageLayout>
       <Head title="Магазин" />
-      <Controls totalItems={cart.items.length} totalPrice={cart.totalPrice} />
+      <Controls
+        totalItems={cart.items.length}
+        totalPrice={cart.totalPrice}
+        onOpenModal={callbacks.onOpenModal}
+      />
       <List list={list} onAddItemToCart={callbacks.onAddItemToCart} />
+      <Modal
+        modal={modal}
+        cart={cart}
+        onCloseModal={callbacks.onCloseModal}
+        onRemoveItemFromCart={callbacks.onRemoveItemFromCart}
+      />
     </PageLayout>
   );
 }

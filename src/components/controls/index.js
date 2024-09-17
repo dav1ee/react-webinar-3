@@ -6,7 +6,7 @@ import { formatNumber } from '../../utils';
 
 import './style.css';
 
-function Controls({ totalItems, totalPrice }) {
+function Controls({ totalItems, totalPrice, onOpenModal = () => {} }) {
   const cn = bem('Controls');
 
   const price = formatNumber(totalPrice);
@@ -17,7 +17,7 @@ function Controls({ totalItems, totalPrice }) {
         <span>В корзине:</span>
         <strong>{!!totalItems ? `${totalItems} / ${price} ₽` : 'пусто'}</strong>
       </div>
-      <button>Перейти</button>
+      <button onClick={onOpenModal}>Перейти</button>
     </div>
   );
 }
@@ -25,6 +25,7 @@ function Controls({ totalItems, totalPrice }) {
 Controls.propTypes = {
   totalItems: PropTypes.number,
   totalPrice: PropTypes.number,
+  onOpenModal: PropTypes.func,
 };
 
 export default React.memo(Controls);

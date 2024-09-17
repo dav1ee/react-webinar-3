@@ -1,6 +1,14 @@
-.List {
-}
-
 .List-item {
   border-bottom: 1px dashed #ccc;
+}
+
+.List-cart {
+  border-top: 1px dashed #ccc;
+}
+
+.List-empty {
+  text-align: center;
+  padding: 20px 0;
+  font-size: 24px;
+  opacity: 0.3;
 }

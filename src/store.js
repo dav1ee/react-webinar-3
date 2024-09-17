@@ -11,6 +11,9 @@ class Store {
         items: [],
         totalPrice: 0,
       },
+      modal: {
+        isOpen: false,
+      },
     };
     this.listeners = []; // Слушатели изменений состояния
   }
@@ -67,13 +70,7 @@ class Store {
       });
     }
 
-    this.setState({
-      ...this.state,
-      cart: {
-        ...this.state.cart,
-        totalPrice: calculateTotal(this.state.cart.items, 'price', 'quantity'),
-      },
-    });
+    this.updateTotalCartPrice();
   }
 
   /**
@@ -86,8 +83,34 @@ class Store {
       cart: {
         ...this.state.cart,
         items: this.state.cart.items.filter(item => item.code !== code),
+        // totalPrice: calculateTotal(this.state.cart.items, 'price', 'quantity'),
+      },
+    });
+
+    this.updateTotalCartPrice();
+  }
+
+  updateTotalCartPrice() {
+    this.setState({
+      ...this.state,
+      cart: {
+        ...this.state.cart,
         totalPrice: calculateTotal(this.state.cart.items, 'price', 'quantity'),
       },
+    });
+  }
+
+  openModal() {
+    this.setState({
+      ...this.state,
+      modal: { isOpen: true },
+    });
+  }
+
+  closeModal() {
+    this.setState({
+      ...this.state,
+      modal: { isOpen: false },
     });
   }
 }
