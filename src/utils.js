@@ -50,3 +50,37 @@ export const generateCode1 = (function (start = 0) {
 export function generateCode2() {
   return generateCode2.value ? ++generateCode2.value : (generateCode2.value = 1);
 }
+
+/**
+ * Разложение числа по разрядам
+ * @param number {Number}
+ * @returns {String}
+ */
+export function formatNumber(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}
+
+/**
+ * Поиск элемента в массиве
+ * @param array {Array}
+ * @param field {String}
+ * @param value {any}
+ * @returns {Object|null}
+ */
+export function findItem(array, field, value) {
+  return array.find(item => item[field] === value) || null;
+}
+
+/**
+ * Суммирование значений по ключу
+ * @param array {Array}
+ * @param key {String} Ключ, по которому производится суммирование
+ * @param multiplierKey {String} Ключ, по которому производится умножение
+ * @returns {Number}
+ */
+export function calculateTotal(array, key, multiplierKey) {
+  return array.reduce(
+    (acc, item) => acc + (item[multiplierKey] ? item[key] * item[multiplierKey] : item[key]),
+    0,
+  );
+}
