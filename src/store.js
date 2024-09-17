@@ -83,7 +83,6 @@ class Store {
       cart: {
         ...this.state.cart,
         items: this.state.cart.items.filter(item => item.code !== code),
-        // totalPrice: calculateTotal(this.state.cart.items, 'price', 'quantity'),
       },
     });
 
