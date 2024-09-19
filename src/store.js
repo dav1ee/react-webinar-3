@@ -55,61 +55,46 @@ class Store {
    */
   addItemToCart(item) {
     const itemInCart = findItem(this.state.cart.items, 'code', item.code);
+    const newItems = itemInCart
+      ? this.state.cart.items.map(cartItem =>
+          cartItem.code === item.code ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem,
+        )
+      : [...this.state.cart.items, { ...item, quantity: 1 }];
 
-    if (itemInCart) {
-      itemInCart.quantity++;
-    } else {
-      const newItems = [...this.state.cart.items, { ...item, quantity: 1 }];
-
-      this.setState({
-        ...this.state,
-        cart: {
-          ...this.state.cart,
-          items: newItems,
-        },
-      });
-    }
-
-    this.updateTotalCartPrice();
+    this.setState({
+      ...this.state,
+      cart: {
+        ...this.state.cart,
+        items: newItems,
+        totalPrice: calculateTotal(newItems, 'price', 'quantity'),
+      },
+    });
   }
 
   /**
-   * Удаление товара из корзины по коду
-   * @param code {Number}
+   * Удаление товара из корзины
+   * @param item {Object}
    */
-  removeItemFromCart(code) {
+  removeItemFromCart(item) {
+    const newItems = this.state.cart.items.filter(({ code }) => code !== item.code);
+
     this.setState({
       ...this.state,
       cart: {
         ...this.state.cart,
-        items: this.state.cart.items.filter(item => item.code !== code),
-      },
-    });
-
-    this.updateTotalCartPrice();
-  }
-
-  updateTotalCartPrice() {
-    this.setState({
-      ...this.state,
-      cart: {
-        ...this.state.cart,
-        totalPrice: calculateTotal(this.state.cart.items, 'price', 'quantity'),
+        items: newItems,
+        totalPrice: calculateTotal(newItems, 'price', 'quantity'),
       },
     });
   }
 
-  openModal() {
+  /**
+   * @param isOpen {Boolean}
+   */
+  setModal(isOpen) {
     this.setState({
       ...this.state,
-      modal: { isOpen: true },
-    });
-  }
-
-  closeModal() {
-    this.setState({
-      ...this.state,
-      modal: { isOpen: false },
+      modal: { isOpen },
     });
   }
 }

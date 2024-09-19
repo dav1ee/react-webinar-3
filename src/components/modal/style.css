@@ -20,21 +20,7 @@
 }
 
 .Modal-content {
-  margin-top: 70px;
-}
-
-.Modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 53px;
-  margin-bottom: 30px;
-  padding: 20px 120px;
-}
-
-.Modal-footer span {
-  font-weight: 700;
-  font-size: 18px;
+  margin: 70px 0;
 }
 
 .Modal .Head {

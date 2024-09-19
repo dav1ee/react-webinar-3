@@ -3,33 +3,21 @@ import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
 
 import Head from '../head';
-import List from '../list';
-import { formatNumber } from '../../utils';
 
 import './style.css';
 
-function Modal({ modal, cart, onCloseModal = () => {}, onRemoveItemFromCart = () => {} }) {
+function Modal({ headTitle = '', isOpen = false, children, onSetModal = () => {} }) {
   const cn = bem('Modal');
 
-  const price = formatNumber(cart.totalPrice);
-
-  if (modal.isOpen) {
+  if (isOpen) {
     return (
       <div className={cn('backdrop')}>
         <div className={cn()}>
-          <Head title="Корзина" action={<button onClick={onCloseModal}>Закрыть</button>} />
-
-          <div className={cn('content')}>
-            <List list={cart.items} isCartList={true} onRemoveItemFromCart={onRemoveItemFromCart} />
-          </div>
-          <div className={cn('footer')}>
-            {!!cart.items.length && (
-              <>
-                <span>Итого</span>
-                <span>{price} ₽</span>
-              </>
-            )}
-          </div>
+          <Head
+            title={headTitle}
+            action={<button onClick={() => onSetModal(false)}>Закрыть</button>}
+          />
+          <div className={cn('content')}>{children}</div>
         </div>
       </div>
     );
@@ -37,12 +25,10 @@ function Modal({ modal, cart, onCloseModal = () => {}, onRemoveItemFromCart = ()
 }
 
 Modal.propTypes = {
-  cart: PropTypes.shape({
-    items: PropTypes.array,
-    totalPrice: PropTypes.number,
-  }).isRequired,
-  onCloseModal: PropTypes.func,
-  onRemoveItemFromCart: PropTypes.func,
+  headTitle: PropTypes.string,
+  isOpen: PropTypes.bool,
+  children: PropTypes.node,
+  onSetModal: PropTypes.func,
 };
 
 export default React.memo(Modal);

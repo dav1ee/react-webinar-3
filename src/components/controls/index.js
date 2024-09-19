@@ -2,22 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
 
-import { formatNumber } from '../../utils';
+import CartInfo from '../cart/cart-info';
 
 import './style.css';
 
-function Controls({ totalItems, totalPrice, onOpenModal = () => {} }) {
+function Controls({ totalItems, totalPrice, onSetModal = () => {} }) {
   const cn = bem('Controls');
-
-  const price = formatNumber(totalPrice);
 
   return (
     <div className={cn()}>
-      <div className={cn('cart-info')}>
-        <span>В корзине:</span>
-        <strong>{!!totalItems ? `${totalItems} / ${price} ₽` : 'пусто'}</strong>
-      </div>
-      <button onClick={onOpenModal}>Перейти</button>
+      <CartInfo totalItems={totalItems} totalPrice={totalPrice} />
+      <button onClick={() => onSetModal(true)}>Перейти</button>
     </div>
   );
 }
@@ -25,7 +20,7 @@ function Controls({ totalItems, totalPrice, onOpenModal = () => {} }) {
 Controls.propTypes = {
   totalItems: PropTypes.number,
   totalPrice: PropTypes.number,
-  onOpenModal: PropTypes.func,
+  onSetModal: PropTypes.func,
 };
 
 export default React.memo(Controls);

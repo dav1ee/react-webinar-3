@@ -2,50 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
 
-import Item from '../item';
-
 import './style.css';
 
-function List({
-  list,
-  isCartList = false,
-  onAddItemToCart = () => {},
-  onRemoveItemFromCart = () => {},
-}) {
+function List({ isTopBordered = false, emptyMessage = '', isEmpty = false, children }) {
   const cn = bem('List');
 
-  return (
-    <div className={`${cn()} ${isCartList && list.length ? cn('cart') : ''}`}>
-      {list.length ? (
-        list.map(item => (
-          <div key={item.code} className={cn('item')}>
-            <Item
-              item={item}
-              isCartItem={isCartList}
-              onAddItemToCart={onAddItemToCart}
-              onRemoveItemFromCart={onRemoveItemFromCart}
-            />
-          </div>
-        ))
-      ) : (
-        <div className={cn('empty')}>Список товаров пуст</div>
-      )}
-    </div>
-  );
+  if (isEmpty) {
+    return <div className={cn('empty')}>{emptyMessage}</div>;
+  }
+
+  return <div className={cn({ 'with-border': isTopBordered })}>{children}</div>;
 }
 
 List.propTypes = {
-  list: PropTypes.arrayOf(
-    PropTypes.shape({
-      code: PropTypes.number,
-      title: PropTypes.string,
-      price: PropTypes.number,
-      quantity: PropTypes.number,
-    }).isRequired,
-  ),
-  isCartList: PropTypes.bool,
-  onAddItemToCart: PropTypes.func,
-  onRemoveItemFromCart: PropTypes.func,
+  isTopBordered: PropTypes.bool,
+  emptyMessage: PropTypes.string,
+  isEmpty: PropTypes.bool,
+  children: PropTypes.node,
 };
 
 export default React.memo(List);

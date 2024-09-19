@@ -1,0 +1,16 @@
+.Cart-summary {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 53px;
+  margin-bottom: 30px;
+  padding: 20px 120px;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.Cart-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
