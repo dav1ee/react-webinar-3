@@ -6,7 +6,9 @@
   font-size: 18px;
 }
 
-.BasketTool-label {
+.BasketTool-link {
+  flex: 1;
+  color: #0087e9;
 }
 
 .BasketTool-total {
