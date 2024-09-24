@@ -8,23 +8,23 @@ import { numberFormat } from '../../utils';
 
 import './style.css';
 
-function Item(props) {
+function Item({ item, onAdd = () => {} }) {
   const cn = bem('Item');
-  const path = generatePath(ROUTER_PATHS.PRODUCT_DETAILS, { id: props.item._id });
+  const path = generatePath(ROUTER_PATHS.PRODUCT_DETAILS, { id: item._id });
 
   const callbacks = {
-    onAdd: e => props.onAdd(props.item._id),
+    onAdd: e => onAdd(item._id),
   };
 
   return (
     <div className={cn()}>
       <div className={cn('title')}>
         <Link to={path} className={cn('title__link')}>
-          {props.item.title}
+          {item.title}
         </Link>
       </div>
       <div className={cn('actions')}>
-        <div className={cn('price')}>{numberFormat(props.item.price)} ₽</div>
+        <div className={cn('price')}>{numberFormat(item.price)} ₽</div>
         <button onClick={callbacks.onAdd}>Добавить</button>
       </div>
     </div>
@@ -38,10 +38,6 @@ Item.propTypes = {
     price: PropTypes.number,
   }).isRequired,
   onAdd: PropTypes.func,
-};
-
-Item.defaultProps = {
-  onAdd: () => {},
 };
 
 export default memo(Item);

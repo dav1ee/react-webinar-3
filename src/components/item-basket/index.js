@@ -8,24 +8,24 @@ import { numberFormat } from '../../utils';
 
 import './style.css';
 
-function ItemBasket(props) {
+function ItemBasket({ item, onRemove = () => {} }) {
   const cn = bem('ItemBasket');
-  const path = generatePath(ROUTER_PATHS.PRODUCT_DETAILS, { id: props.item._id });
+  const path = generatePath(ROUTER_PATHS.PRODUCT_DETAILS, { id: item._id });
 
   const callbacks = {
-    onRemove: e => props.onRemove(props.item._id),
+    onRemove: e => onRemove(item._id),
   };
 
   return (
     <div className={cn()}>
       <div className={cn('title')}>
         <Link to={path} className={cn('title__link')}>
-          {props.item.title}
+          {item.title}
         </Link>
       </div>
       <div className={cn('right')}>
-        <div className={cn('cell')}>{numberFormat(props.item.price)} ₽</div>
-        <div className={cn('cell')}>{numberFormat(props.item.amount || 0)} шт</div>
+        <div className={cn('cell')}>{numberFormat(item.price)} ₽</div>
+        <div className={cn('cell')}>{numberFormat(item.amount || 0)} шт</div>
         <div className={cn('cell')}>
           <button onClick={callbacks.onRemove}>Удалить</button>
         </div>
@@ -42,10 +42,6 @@ ItemBasket.propTypes = {
     amount: PropTypes.number,
   }).isRequired,
   onRemove: PropTypes.func,
-};
-
-ItemBasket.defaultProps = {
-  onRemove: () => {},
 };
 
 export default memo(ItemBasket);

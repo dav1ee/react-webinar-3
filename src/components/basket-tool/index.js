@@ -8,7 +8,7 @@ import { numberFormat, plural } from '../../utils';
 
 import './style.css';
 
-function BasketTool({ sum, amount, onOpen }) {
+function BasketTool({ sum = 0, amount = 0, onOpen = () => {} }) {
   const cn = bem('BasketTool');
   return (
     <div className={cn()}>
@@ -34,12 +34,6 @@ BasketTool.propTypes = {
   onOpen: PropTypes.func.isRequired,
   sum: PropTypes.number,
   amount: PropTypes.number,
-};
-
-BasketTool.defaultProps = {
-  onOpen: () => {},
-  sum: 0,
-  amount: 0,
 };
 
 export default memo(BasketTool);
