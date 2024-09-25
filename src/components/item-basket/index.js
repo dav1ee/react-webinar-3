@@ -8,18 +8,19 @@ import { numberFormat } from '../../utils';
 
 import './style.css';
 
-function ItemBasket({ item, onRemove = () => {} }) {
+function ItemBasket({ item, onRemove = () => {}, onCloseModal = () => {} }) {
   const cn = bem('ItemBasket');
   const path = generatePath(ROUTER_PATHS.PRODUCT_DETAILS, { id: item._id });
 
   const callbacks = {
     onRemove: e => onRemove(item._id),
+    onCloseModal: e => onCloseModal(),
   };
 
   return (
     <div className={cn()}>
       <div className={cn('title')}>
-        <Link to={path} className={cn('title__link')}>
+        <Link to={path} onClick={callbacks.onCloseModal} className={cn('title__link')}>
           {item.title}
         </Link>
       </div>
@@ -42,6 +43,7 @@ ItemBasket.propTypes = {
     amount: PropTypes.number,
   }).isRequired,
   onRemove: PropTypes.func,
+  onCloseModal: PropTypes.func,
 };
 
 export default memo(ItemBasket);
