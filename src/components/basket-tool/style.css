@@ -8,6 +8,9 @@
 
 .BasketTool-link {
   flex: 1;
+}
+
+.BasketTool-link a {
   color: #0087e9;
 }
 
