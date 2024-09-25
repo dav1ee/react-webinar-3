@@ -1,4 +1,5 @@
 import StoreModule from '../module';
+import { getArticleById } from '../../api/articles';
 
 class Basket extends StoreModule {
   initState() {
@@ -28,10 +29,7 @@ class Basket extends StoreModule {
     });
 
     if (!exist) {
-      const response = await fetch(
-        `/api/v1/articles/${_id}?fields=*,madeIn(title,code),category(title)`,
-      );
-      const { result } = await response.json();
+      const { result } = await getArticleById(_id);
 
       list.push({ ...result, amount: 1 }); // list уже новый, в него можно пушить.
       // Добавляем к сумме.
