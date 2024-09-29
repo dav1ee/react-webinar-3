@@ -1,19 +1,14 @@
 import { memo } from 'react';
-import { Link, generatePath } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
 
-import { useLocalization } from '../../app/localization/use-localization';
-
-import { ROUTER_PATHS } from '../../constants';
 import { numberFormat } from '../../utils';
 
 import './style.css';
 
-function ItemBasket({ item, onRemove = () => {}, onCloseModal = () => {} }) {
+function ItemBasket({ item, path, texts, onRemove = () => {}, onCloseModal = () => {} }) {
   const cn = bem('ItemBasket');
-  const { getLocale } = useLocalization();
-  const path = generatePath(ROUTER_PATHS.PRODUCT_DETAILS, { id: item._id });
 
   const callbacks = {
     onRemove: e => onRemove(item._id),
@@ -30,10 +25,10 @@ function ItemBasket({ item, onRemove = () => {}, onCloseModal = () => {} }) {
       <div className={cn('right')}>
         <div className={cn('cell')}>{numberFormat(item.price)} ₽</div>
         <div className={cn('cell')}>
-          {numberFormat(item.amount || 0)} {getLocale('product', 'amount')}
+          {numberFormat(item.amount || 0)} {texts.amount}
         </div>
         <div className={cn('cell')}>
-          <button onClick={callbacks.onRemove}>{getLocale('buttons', 'delete')}</button>
+          <button onClick={callbacks.onRemove}>{texts.onRemove}</button>
         </div>
       </div>
     </div>
@@ -47,6 +42,11 @@ ItemBasket.propTypes = {
     price: PropTypes.number,
     amount: PropTypes.number,
   }).isRequired,
+  path: PropTypes.string,
+  texts: PropTypes.shape({
+    amount: PropTypes.string,
+    onRemove: PropTypes.string,
+  }),
   onRemove: PropTypes.func,
   onCloseModal: PropTypes.func,
 };

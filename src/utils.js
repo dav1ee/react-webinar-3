@@ -1,3 +1,5 @@
+import locales from './locales.json';
+
 /**
  * Плюрализация
  * Возвращает вариант с учётом правил множественного числа под указанную локаль
@@ -75,4 +77,14 @@ export function generatePages(totalPages, currentPage) {
   }
 
   return pages;
+}
+
+/**
+ * @param language {String}
+ * @param category {String} - titles, links, buttons, basketInfo, product
+ * @param key {String} - titles: main, basket; links: home; buttons: add, delete, goTo, close; basketInfo: inside, empty, total; product: originCountry, category, edition, price, amount;
+ * @returns {string}
+ */
+export function getLocale(language, category, key) {
+  return locales[language][category][key];
 }

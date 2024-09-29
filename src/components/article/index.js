@@ -2,33 +2,30 @@ import { memo } from 'react';
 import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
 
-import { useLocalization } from '../../app/localization/use-localization';
-
 import './style.css';
 
-function Article({ _id, description, madeIn, category, edition, price, onAdd }) {
+function Article({ _id, description, madeIn, category, edition, price, texts, onAdd }) {
   const cn = bem('Article');
-  const { getLocale } = useLocalization();
 
   return (
     <div className={cn()}>
       <p className={cn('item')}>{description}</p>
       <p className={cn('item')}>
-        {getLocale('product', 'originCountry')}:{' '}
+        {texts.originCountry}:{' '}
         <strong>
           {madeIn.title} ({madeIn.code})
         </strong>
       </p>
       <p className={cn('item')}>
-        {getLocale('product', 'category')}: <strong>{category.title}</strong>
+        {texts.category}: <strong>{category.title}</strong>
       </p>
       <p className={cn('item')}>
-        {getLocale('product', 'edition')}: <strong>{edition}</strong>
+        {texts.edition}: <strong>{edition}</strong>
       </p>
       <p className={cn('item', { price: true })}>
-        {getLocale('product', 'price')}: {price} ₽
+        {texts.price}: {price} ₽
       </p>
-      <button onClick={() => onAdd(_id)}>{getLocale('buttons', 'add')}</button>
+      <button onClick={() => onAdd(_id)}>{texts.onAdd}</button>
     </div>
   );
 }
@@ -45,6 +42,13 @@ Article.propTypes = {
   }),
   edition: PropTypes.number,
   price: PropTypes.number,
+  texts: PropTypes.shape({
+    originCountry: PropTypes.string,
+    category: PropTypes.string,
+    edition: PropTypes.string,
+    price: PropTypes.string,
+    onAdd: PropTypes.string,
+  }),
   onAdd: PropTypes.func,
 };
 

@@ -1,12 +1,16 @@
 import { createRoot } from 'react-dom/client';
 
-import Store from './store';
 import Providers from './app/providers';
-import router from './app/router';
+import Store from './store';
+import App from './app';
 
 const store = new Store();
 
 const root = createRoot(document.getElementById('root'));
 
 // Первый рендер приложения
-root.render(<Providers store={store} router={router} />);
+root.render(
+  <Providers store={store}>
+    <App />
+  </Providers>,
+);

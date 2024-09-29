@@ -1,0 +1,18 @@
+.Menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 20px;
+}
+
+.Menu-nav {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  gap: 12px;
+}
+
+.Menu-nav a {
+  color: #0087e9;
+  font-size: 18px;
+}

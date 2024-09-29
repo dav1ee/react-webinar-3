@@ -1,20 +1,22 @@
 import { memo, useCallback } from 'react';
+import { generatePath } from 'react-router-dom';
 
-import { useLocalization } from '../localization/use-localization';
-
-import ItemBasket from '../../components/item-basket';
 import List from '../../components/list';
+import ItemBasket from '../../components/item-basket';
 import ModalLayout from '../../components/modal-layout';
 import BasketTotal from '../../components/basket-total';
 
 import useStore from '../../store/use-store';
 import useSelector from '../../store/use-selector';
 
+import { getLocale } from '../../utils';
+import { ROUTER_PATHS } from '../../constants';
+
 function Basket() {
   const store = useStore();
-  const { getLocale } = useLocalization();
 
   const select = useSelector(state => ({
+    language: state.localization.language,
     list: state.basket.list,
     amount: state.basket.amount,
     sum: state.basket.sum,
@@ -30,22 +32,33 @@ function Basket() {
   const renders = {
     itemBasket: useCallback(
       item => {
+        const path = generatePath(ROUTER_PATHS.PRODUCT_DETAILS, { id: item._id });
+        const texts = {
+          amount: getLocale(select.language, 'product', 'amount'),
+          onRemove: getLocale(select.language, 'buttons', 'delete'),
+        };
         return (
           <ItemBasket
             item={item}
+            path={path}
+            texts={texts}
             onRemove={callbacks.removeFromBasket}
             onCloseModal={callbacks.closeModal}
           />
         );
       },
-      [callbacks.removeFromBasket],
+      [callbacks.removeFromBasket, select.language],
     ),
   };
 
   return (
-    <ModalLayout title={getLocale('titles', 'basket')} onClose={callbacks.closeModal}>
+    <ModalLayout
+      language={select.language}
+      title={getLocale(select.language, 'titles', 'basket')}
+      onClose={callbacks.closeModal}
+    >
       <List list={select.list} renderItem={renders.itemBasket} />
-      <BasketTotal sum={select.sum} />
+      <BasketTotal label={getLocale(select.language, 'basketInfo', 'total')} sum={select.sum} />
     </ModalLayout>
   );
 }

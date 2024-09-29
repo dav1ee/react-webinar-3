@@ -2,19 +2,16 @@ import { memo } from 'react';
 import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
 
-import { useLocalization } from '../../app/localization/use-localization';
-
 import { numberFormat } from '../../utils';
 
 import './style.css';
 
-function BasketTotal({ sum = 0 }) {
+function BasketTotal({ label, sum = 0 }) {
   const cn = bem('BasketTotal');
-  const { getLocale } = useLocalization();
 
   return (
     <div className={cn()}>
-      <span className={cn('cell')}>{getLocale('basketInfo', 'total')}</span>
+      <span className={cn('cell')}>{label}</span>
       <span className={cn('cell')}> {numberFormat(sum)} ₽</span>
       <span className={cn('cell')}></span>
     </div>
@@ -22,6 +19,7 @@ function BasketTotal({ sum = 0 }) {
 }
 
 BasketTotal.propTypes = {
+  label: PropTypes.string,
   sum: PropTypes.number,
 };
 
