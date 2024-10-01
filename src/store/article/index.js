@@ -8,6 +8,7 @@ class ArticleState extends StoreModule {
     return {
       data: {},
       waiting: false, // признак ожидания загрузки
+      error: null,
     };
   }
 
@@ -21,6 +22,7 @@ class ArticleState extends StoreModule {
     this.setState({
       data: {},
       waiting: true,
+      error: null,
     });
 
     try {
@@ -39,11 +41,14 @@ class ArticleState extends StoreModule {
       );
     } catch (e) {
       // Ошибка при загрузке
-      // @todo В стейт можно положить информацию об ошибке
-      this.setState({
-        data: {},
-        waiting: false,
-      });
+      this.setState(
+        {
+          data: {},
+          waiting: false,
+          error: e,
+        },
+        'Ошибка при загрузке товара',
+      );
     }
   }
 }

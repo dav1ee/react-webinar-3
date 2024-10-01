@@ -16,9 +16,11 @@ class CatalogState extends StoreModule {
         limit: 10,
         sort: 'order',
         query: '',
+        category: '',
       },
       count: 0,
       waiting: false,
+      error: null,
     };
   }
 
@@ -36,6 +38,7 @@ class CatalogState extends StoreModule {
       validParams.limit = Math.min(Number(urlParams.get('limit')) || 10, 50);
     if (urlParams.has('sort')) validParams.sort = urlParams.get('sort');
     if (urlParams.has('query')) validParams.query = urlParams.get('query');
+    if (urlParams.has('category')) validParams.category = urlParams.get('category');
     await this.setParams({ ...this.initState().params, ...validParams, ...newParams }, true);
   }
 
@@ -85,19 +88,33 @@ class CatalogState extends StoreModule {
       fields: 'items(*),count',
       sort: params.sort,
       'search[query]': params.query,
+      ...(params.category ? { 'search[category]': params.category } : {}),
     };
 
-    const response = await fetch(`/api/v1/articles?${new URLSearchParams(apiParams)}`);
-    const json = await response.json();
-    this.setState(
-      {
-        ...this.getState(),
-        list: json.result.items,
-        count: json.result.count,
-        waiting: false,
-      },
-      'Загружен список товаров из АПИ',
-    );
+    try {
+      const response = await fetch(`/api/v1/articles?${new URLSearchParams(apiParams)}`);
+      const json = await response.json();
+
+      this.setState(
+        {
+          ...this.getState(),
+          list: json.result.items,
+          count: json.result.count,
+          waiting: false,
+          error: null,
+        },
+        'Загружен список товаров из АПИ',
+      );
+    } catch (e) {
+      this.setState(
+        {
+          ...this.getState(),
+          waiting: false,
+          error: e,
+        },
+        'Ошибка при загрузке товаров',
+      );
+    }
   }
 }
 
