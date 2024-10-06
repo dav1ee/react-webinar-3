@@ -2,10 +2,8 @@
   display: flex;
   flex-wrap: nowrap;
   justify-content: flex-start;
-  padding: 0;
-  margin-left: -5px;
-  margin-right: -5px;
   align-items: center;
+  padding: 0;
 }
 
 .SideLayout_side_start {
@@ -34,4 +32,12 @@
 
 .SideLayout-item_gap_medium {
   margin: 0 10px;
+}
+
+.SideLayout_border_none {
+  border: 0;
+}
+
+.SideLayout_border_bottom {
+  border-bottom: 1px solid #dcdcdc;
 }

@@ -68,9 +68,9 @@ export function formatCategoriesWithDashes(categories, level = 0) {
   const result = [];
 
   categories.forEach(category => {
-    const indent = '-'.repeat(level);
+    const indent = '- '.repeat(level);
     result.push({
-      title: !!indent ? `${indent} ${category.title}` : category.title,
+      title: !!indent ? `${indent}${category.title}` : category.title,
       value: category._id,
     });
 

@@ -12,7 +12,6 @@ class AuthState extends StoreModule {
       isLoading: false,
       isSuccess: false,
       isInitialAuth: true,
-      isAuth: false,
       error: null,
     };
   }
@@ -25,7 +24,6 @@ class AuthState extends StoreModule {
       ...this.getState(),
       isLoading: true,
       isSuccess: false,
-      isAuth: false,
       error: null,
     });
 
@@ -40,7 +38,7 @@ class AuthState extends StoreModule {
 
       if (!response.ok) {
         const { error } = await response.json();
-        throw new Error(error.message);
+        throw new Error(error.data.issues?.[0].message);
       }
 
       const json = await response.json();
@@ -50,7 +48,6 @@ class AuthState extends StoreModule {
         user: json.result.user,
         isLoading: false,
         isSuccess: true,
-        isAuth: true,
         error: null,
       });
 
@@ -81,6 +78,7 @@ class AuthState extends StoreModule {
       });
 
       if (!response.ok) {
+        localStorage.removeItem('token');
         const { error } = await response.json();
         throw new Error(error.message);
       }
@@ -92,9 +90,7 @@ class AuthState extends StoreModule {
       localStorage.removeItem('token');
     } catch (e) {
       this.setState({
-        ...this.getState(),
-        isLoading: false,
-        isSuccess: false,
+        ...this.initState(),
         error: e.message,
       });
     }
@@ -121,6 +117,7 @@ class AuthState extends StoreModule {
       });
 
       if (!response.ok) {
+        localStorage.removeItem('token');
         const { error } = await response.json();
         throw new Error(error.message);
       }

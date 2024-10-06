@@ -45,7 +45,7 @@ function AuthBar() {
   );
 
   return (
-    <SideLayout side="end" padding="small" gap="medium">
+    <SideLayout side="end" padding="small" gap="medium" border="bottom">
       {children}
     </SideLayout>
   );

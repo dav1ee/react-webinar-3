@@ -12,7 +12,6 @@ export default function useAuth() {
     isLoading: state.auth.isLoading,
     isSuccess: state.auth.isSuccess,
     isInitialAuth: state.auth.isInitialAuth,
-    isAuth: state.auth.isAuth,
     error: state.auth.error,
   }));
 
@@ -27,7 +26,7 @@ export default function useAuth() {
     isLoading: select.isLoading,
     isSuccess: select.isSuccess,
     isInitialAuth: select.isInitialAuth,
-    isAuth: select.isAuth,
+    isAuth: !!select.token || Object.keys(select.user ?? {}).length > 0,
     error: select.error,
 
     login: callbacks.login,
