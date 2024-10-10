@@ -1,0 +1,38 @@
+.CommentItem {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.CommentItem-head {
+  display: flex;
+  gap: 10px;
+}
+
+.CommentItem-author {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.CommentItem-author_current {
+  color: #666;
+}
+
+.CommentItem-date {
+  font-size: 12px;
+  color: #666;
+}
+
+.CommentItem-text {
+  margin: 0;
+  font-size: 14px;
+}
+
+.CommentItem-reply_btn {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  font-size: 12px;
+  color: #0087e9;
+  cursor: pointer;
+}
