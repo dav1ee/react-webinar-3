@@ -14,7 +14,7 @@ import useSelector from '../../hooks/use-selector';
 import useInit from '../../hooks/use-init';
 
 function Login() {
-  const { t } = useTranslate();
+  const { t, lang } = useTranslate();
   const location = useLocation();
   const navigate = useNavigate();
   const store = useStore();
@@ -57,7 +57,7 @@ function Login() {
   };
 
   return (
-    <PageLayout>
+    <PageLayout key={lang}>
       <TopHead />
       <Head title={t('title')}>
         <LocaleSelect />

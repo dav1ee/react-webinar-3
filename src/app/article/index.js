@@ -34,7 +34,7 @@ function Article() {
   useInit(() => {
     dispatch(articleActions.load(params.id));
     dispatch(commentsActions.load(params.id));
-  }, [params.id]);
+  }, [params.id, lang]);
 
   const select = useSelector(
     state => ({
@@ -65,7 +65,7 @@ function Article() {
   };
 
   return (
-    <PageLayout>
+    <PageLayout key={lang}>
       <TopHead />
       <Head title={select.article.title}>
         <LocaleSelect />

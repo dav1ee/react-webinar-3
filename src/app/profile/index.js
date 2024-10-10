@@ -25,10 +25,10 @@ function Profile() {
     waiting: state.profile.waiting,
   }));
 
-  const { t } = useTranslate();
+  const { t, lang } = useTranslate();
 
   return (
-    <PageLayout>
+    <PageLayout key={lang}>
       <TopHead />
       <Head title={t('title')}>
         <LocaleSelect />

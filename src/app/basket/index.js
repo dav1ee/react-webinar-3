@@ -30,7 +30,7 @@ function Basket() {
     }, [store]),
   };
 
-  const { t } = useTranslate();
+  const { t, lang } = useTranslate();
 
   const renders = {
     itemBasket: useCallback(
@@ -50,6 +50,7 @@ function Basket() {
 
   return (
     <ModalLayout
+      key={lang}
       title={t('basket.title')}
       labelClose={t('basket.close')}
       onClose={callbacks.closeModal}
