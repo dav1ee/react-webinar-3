@@ -1,4 +1,4 @@
-import { memo, useMemo, useState } from 'react';
+import { memo, useMemo, useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
 
@@ -25,6 +25,7 @@ function CommentsSection({
   const cn = bem('CommentsSection');
 
   const [replyToCommentId, setReplyToCommentId] = useState(null);
+  const replyFormRef = useRef(null);
 
   function onReply(id) {
     setReplyToCommentId(id);
@@ -38,6 +39,17 @@ function CommentsSection({
     onAdd(replyToCommentId, text);
   }
 
+  function getIndent(level, limit, value) {
+    if (level === 0) return 0;
+    return level <= limit ? value : 0;
+  }
+
+  useEffect(() => {
+    if (replyFormRef.current) {
+      replyFormRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [replyToCommentId]);
+
   const commentsTree = useMemo(() => listToTree(comments), [comments]);
 
   const renderComments = (commentsList, level = 0) => {
@@ -48,7 +60,7 @@ function CommentsSection({
         <div
           key={comment._id}
           className={cn('item_wrapper')}
-          style={{ marginLeft: level === 0 ? 0 : '30px' }}
+          style={{ marginLeft: getIndent(level, 15, '30px') }}
         >
           <CommentItem
             author={comment.author?.profile?.name ?? currentUser.name}
@@ -62,7 +74,7 @@ function CommentsSection({
           {hasChildren && renderComments(comment.children, level + 1)}
 
           {replyToCommentId === comment._id && (
-            <div style={{ marginLeft: hasChildren ? '30px' : 0 }}>
+            <div ref={replyFormRef} style={{ marginLeft: hasChildren ? '30px' : 0 }}>
               {sessionExists ? (
                 <CommentForm
                   variant="reply"

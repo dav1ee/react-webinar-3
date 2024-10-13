@@ -14,9 +14,7 @@ function CommentItem({ author, date, text, isCreatedByCurrentUser, t, onReply })
         <div className={cn('date')}>{date}</div>
       </div>
       <div>
-        <p className={cn('text')}>
-          {isCreatedByCurrentUser ? `${t('comments.myReply')}. ${text}` : text}
-        </p>
+        <p className={cn('text')}>{text}</p>
       </div>
       <div>
         <button className={cn('reply_btn')} onClick={onReply}>

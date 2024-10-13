@@ -15,7 +15,7 @@ function CommentForm({ variant, error, isDisabled, t, onSubmit, onCancel }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!text) return;
+    if (!text.trim()) return;
     onSubmit(text);
     setText('');
   }
